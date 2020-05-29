@@ -4,7 +4,7 @@ const conn = mongoose.connection;
  mongoose.set('useCreateIndex', true);
  mongoose.connect(config.db_uri, { useNewUrlParser: true })
                         .then(() => {console.log("Connect database success!")})
-                        .then((err) => {console.log("Connect database exception : ", err)});
+                        .catch((err) => {console.log("Connect database exception : ", err)});
 
  
   conn.on('error', (err) => {
