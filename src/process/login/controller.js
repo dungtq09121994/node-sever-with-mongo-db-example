@@ -16,9 +16,27 @@ function AccountController() {
         })
     };
 
-    
+    const login = function (req, res) {
+        Account.findOne({userName: req.body.userName}).exec( function(err, account){
+            if(err) {
+                return res.json(messageUtils.buidResponseMessage(2002, "Tạo tài khoản thất bại"), err);
+            } else if (!account) {
+                return res.json(messageUtils.buidResponseMessage(2003, "tài khoản hoặc mật khẩu không chính xác"), "");
+            }
+            if(account.password == req.body.password) {
+                req.session.account =   account;
+                res.json({
+                    user: user,
+                    "login": "success"
+                })
+            } else {
+                return res.json(messageUtils.buidResponseMessage(2003, "tài khoản hoặc mật khẩu không chính xác"), "");
+            }
+        })
+    }
     return {
-        register : register 
+        register : register ,
+        login : login
     }
 }
 
